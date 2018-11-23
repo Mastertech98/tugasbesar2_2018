@@ -1,5 +1,5 @@
 <?php
-if (!isset($_COOKIE['id'])) {
+if (!isset($_COOKIE['access_token'])) {
     header("Location: /login/");
     exit;
 }
@@ -15,7 +15,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
         $order_id = $mysqli->real_escape_string($_GET['id']);
 
-        $book_query = "SELECT id, title, author FROM (SELECT book_id FROM 'order' WHERE id = '$order_id') AS 'book_order' JOIN 'book' ON book_id = id";
+        $book_query = "SELECT id, title, author FROM (SELECT book_id FROM `order` WHERE id = '$order_id') AS `book_order` JOIN `book` ON book_id = id";
         
         if (!$books = $mysqli->query($book_query)) {
             echo "Failed to run query: (" . $mysqli->errno . ") " . $mysqli->error;
@@ -32,7 +32,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $rating = $mysqli->real_escape_string($_POST['rating']);
         $comments = $mysqli->real_escape_string($_POST['comments']);
 
-        $review_query = "UPDATE 'order' SET rating = '$rating', comments = '$comments' WHERE id = '$id'";
+        $review_query = "UPDATE `order` SET rating = '$rating', comments = '$comments' WHERE id = '$id'";
 
         if (!$result = $mysqli->query($review_query)) {
             echo "Failed to run query: (" . $mysqli->errno . ") " . $mysqli->error;
@@ -52,40 +52,47 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
 <head>
     <title>Review</title>
+    <link rel="stylesheet" href ="/header.css" type="text/css"/>
+    <link rel="stylesheet" href ="/review/review.css" type="text/css"/>
 </head>
 
-<body>
-    <article>
+<body class="history">
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/header.php' ?>
+    <main>
         <section>
+            <div class="book-cover"><img src="/book-detail/cover/<?= $book['id'] ?>.jpg" alt="cover of <?= $book['title'] ?>" /></div>
             <h1 class="book-title"><?= $book['title'] ?></h1>
             <div class="book-author"><?= $book['author'] ?></div>
-            <div class="book-cover"><img src="/book-detail/cover/<?= $book['id'] ?>.png" alt="cover of <?= $book['title'] ?>" /></div>
         </section>
-        <section>
-            <form method="post">
-                <input type="hidden" name="id" id="id" value="<?= $order_id ?>" />
-                <section>
-                    <h2>Add Rating</h2>
-                    <div class="rating">
-                        <span><input type="radio" name="rating" id="star5" value="5"><label for="star5"></label></span>
-                        <span><input type="radio" name="rating" id="star4" value="4"><label for="star4"></label></span>
-                        <span><input type="radio" name="rating" id="star3" value="3"><label for="star3"></label></span>
-                        <span><input type="radio" name="rating" id="star2" value="2"><label for="star2"></label></span>
-                        <span><input type="radio" name="rating" id="star1" value="1"><label for="star1"></label></span>
-                    </div>
-                </section>
-                <section>
-                    <h2>Add Comment</h2>
-                    <textarea name="comments"></textarea>
-                </section>
-                <div class="button">
-                    <button class="secondary" type="button">Back</button>
-                    <button class="primary">Submit</button>
+        <form method="post">
+            <input type="hidden" name="id" id="id" value="<?= $order_id ?>" />
+            <section>
+                <h2>Add Rating</h2>
+                <div class="rating">
+                    <input name="rating" type="radio" id="5-star" value="5" />
+                    <label for="5-star" class="star"><img /></label>
+                    <input name="rating" type="radio" id="4-star" value="4" />
+                    <label for="4-star" class="star"><img /></label>
+                    <input name="rating" type="radio" id="3-star" value="3" checked="checked" />
+                    <label for="3-star" class="star"><img /></label>
+                    <input name="rating" type="radio" id="2-star" value="2" />
+                    <label for="2-star" class="star"><img /></label>
+                    <input name="rating" type="radio" id="1-star" value="1"  />
+                    <label for="1-star" class="star"><img /></label>
                 </div>
-            </form>
-        </section>
-    </article>
-    <script src="review.js"></script>
+            </section>
+            <section>
+                <h2>Add Comment</h2>
+                <textarea id="comments" name="comments" rows="6"></textarea><br />
+                <span id="comments-error"></span>
+            </section>
+            <div class="button">
+                <button class="secondary" type="button" onclick="window.history.back()">Back</button>
+                <button class="primary">Submit</button>
+            </div>
+        </form>
+    </main>
+    <script src="validation.js" type="module"></script>
 </body>
 
 </html>

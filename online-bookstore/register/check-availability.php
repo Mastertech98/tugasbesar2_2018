@@ -3,7 +3,7 @@ function is_available($attribute, $value) {
     require_once $_SERVER['DOCUMENT_ROOT'] . "/config.php";
     global $mysqli;
 
-    $sql = "SELECT id FROM user WHERE $attribute = '$value'";
+    $sql = "SELECT id FROM `user` WHERE $attribute = '$value'";
 
     if (!$result = $mysqli->query($sql)) {
         echo "Failed to run query: (" . $mysqli->errno . ") " . $mysqli->error;

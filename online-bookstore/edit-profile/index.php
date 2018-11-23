@@ -1,16 +1,19 @@
 <?php
-if (!isset($_COOKIE['id'])) {
+if (!isset($_COOKIE['access_token'])) {
     header("Location: /login/");
     exit;
 }
 
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config.php";
+
+$access_token = $_COOKIE['access_token'];
+$id = $mysqli->query("SELECT id FROM user WHERE access_token = '$access_token'");
+$id = $id->fetch_assoc();
+$id = $id['id'];
+
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-        require_once $_SERVER['DOCUMENT_ROOT'] . "/config.php";
-
-        $id = $mysqli->real_escape_string($_COOKIE['id']);
-
-        $profile_query = "SELECT name, address, phone_number FROM user WHERE id = '$id'";
+        $profile_query = "SELECT name, address, phone_number FROM `user` WHERE id = '$id'";
 
         if (!$profiles = $mysqli->query($profile_query)) {
             echo "Failed to run query: (" . $mysqli->errno . ") " . $mysqli->error;
@@ -19,12 +22,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
         $profile = $profiles->fetch_assoc();
 
+        $profile_picture = glob($_SERVER['DOCUMENT_ROOT'] . "/profile/pictures/$id.*");
+        $profile_picture = $profile_picture ? basename($profile_picture[0]) : "0.jpg";
         break;
     case 'POST':
-        require_once $_SERVER['DOCUMENT_ROOT'] . "/config.php";
-
         $upload_dir = $_SERVER['DOCUMENT_ROOT'] . "/profile/pictures/";
-        $upload_file = $_COOKIE['id'] . '.' . pathinfo($_FILES['picture']['name'], PATHINFO_EXTENSION);
+        $upload_file = $id . '.' . pathinfo($_FILES['picture']['name'], PATHINFO_EXTENSION);
 
         if ($_FILES['picture']['error'] === UPLOAD_ERR_OK) {
             array_map('unlink', glob($upload_dir . "$id.*"));
@@ -55,36 +58,53 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
 <head>
     <title>Edit Profile</title>
+    <link rel="stylesheet" href ="/header.css" type="text/css"/>
+    <link rel="stylesheet" href ="edit-profile.css" type="text/css"/>
 </head>
 
-<body>
+<body class="profile">
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/header.php' ?>
     <main>
         <h1>Edit Profile</h1>
         <form method="post" enctype="multipart/form-data">
-            <div class="input">
-                <img src="<?= $profile['picture'] ?>" />
-                <label for="picture">Update profile picture</label>
-                <input type="file" id="picture" name="picture" accept="image/*" />
+            <div class="inputimage">
+                <img class ="profileimage" src="/profile/pictures/<?= $profile_picture ?>" />
+                <div class="container">
+                    <div class="updatetitle"> Update profile picture </div>   
+                    <span class= "preview">No file selected</span>
+                    <span><label class="updatebutton" for="picture">Browse...</label></span>
+                    <input type="file" id="picture" name="picture" accept="image/*" />
+                </div>
             </div>
             <div class="input">
                 <label for="name">Name</label>
-                <input type="text" id="name" name="name" value="<?= $profile['name'] ?>" />
+                <span>
+                    <input type="text" id="name" name="name" value="<?= $profile['name'] ?>" /><br />
+                    <span id="name-error"></span>
+                </span>
             </div>
-            <div class="input">
+            <div class="inputaddress">
                 <label for="address">Address</label>
-                <textarea id="address" name="address"><?= $profile['address'] ?></textarea>
+                <span>
+                    <textarea id="address" name="address"><?= $profile['address'] ?></textarea><br />
+                    <span id="address-error"></span>
+                </span>
             </div>
             <div class="input">
                 <label for="phone-number">Phone Number</label>
-                <input type="tel" id="phone-number" name="phone_number" value="<?= $profile['phone_number'] ?>" />
+                <span>
+                    <input type="tel" id="phone-number" name="phone_number" value="<?= $profile['phone_number'] ?>" /><br />
+                    <span id="phone-number-error"></span>
+                </span>
             </div>
             <div class="button">
-                <button class="secondary" type="button">Back</button>
+                <button class="secondary" type="button" onclick="window.history.back()">Back</button>
                 <button class="primary">Save</button>
             </div>
         </form>
-        <script src="availability-validation.js"></script>
     </main>
+    <script src="validation.js" type="module"></script>
+    <script src="preview-input.js"></script>
 </body>
 
 </html>
