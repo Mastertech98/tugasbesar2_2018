@@ -1,0 +1,214 @@
+main {
+    padding: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+section {
+    margin-top: 32px;
+}
+
+h1 {
+    color: #f26600;
+    margin: 4px 0;
+    font-weight: bold;
+    font-size: 48px;
+}
+
+h2 {
+    color: #00374c;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+img {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+}
+
+.left {
+    display: block;
+    overflow: hidden;
+    width: auto;
+}
+
+.right {
+    float: right;
+    width: 128px;
+}
+
+.book-author {
+    color: #4e4e4e;
+    font-weight: bold;
+}
+
+.book-synopsis {
+    margin-top: 16px;
+    color: #585858;
+    font-weight: normal;
+}
+
+.book-cover {
+    margin: auto;
+    width: 96px;
+    height: 96px;
+    border: 2px solid #6c6c6c;
+}
+
+.rating .stars {
+    display: flex;
+    margin-top: 8px;
+    justify-content: center;
+}
+
+.rating .stars img {
+    height: 24px;
+    width: 24px;
+}
+
+.rating .number {
+    text-align: center;
+    font-weight: bold;
+}
+
+form .button {
+    overflow: hidden;
+    margin: 4px;
+}
+
+form .button button {
+    float: right;
+    background-color: #00aeef;
+    color: white;
+    font-size: 16px;
+    width: 80px;
+    height: 28px;
+    border: 0;
+    border-radius: 4px;
+}
+
+form label {
+    margin-right: 8px;
+}
+
+#quantity {
+    width: 48px;
+    border: 2px solid #464646;
+    border-radius: 2px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    overflow: hidden;
+    margin-bottom: 32px;
+}
+
+.review-profile-picture {
+    float: left;
+    width: 64px;
+    height: 64px;
+    margin-right: 16px;
+    border: 2px solid #6c6c6c;
+}
+
+.review-username, .review-comments {
+    display: block;
+    overflow: hidden;
+    width: auto;
+}
+
+.review-username {
+    font-weight: bold;
+    font-size: larger;
+}
+
+.review-rating {
+    float: right;
+    margin-left: 16px;
+    width: 64px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.review-rating img {
+    display: block;
+    margin: auto;
+    height: 48px;
+    width: 48px;
+}
+
+.modal {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-window {
+    position: fixed;
+    overflow: hidden;
+    border-radius: 4px;
+    width: 256px;
+    height: 64px;
+    background-color: white;
+    padding: 16px 8px 8px 8px;
+}
+
+.modal-content {
+    display: flex;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.modal-close {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    text-align: center;
+    line-height: 16px;
+    font-size: 16px;
+    background: none;
+    border: none;
+}
+
+.check {
+    width: 48px;
+    height: 48px;
+    margin: 8px;
+}
+
+input.invalid{
+    border-color: #900;
+    background-color: #FDD;
+}
+
+input:focus.invalid {
+    outline: none;
+}
+
+.error {
+    padding: 0;
+    width: 100%;
+    
+    font-size: 80%;
+    color: white;
+    background-color: #900;
+    border-radius: 5px;
+}
+
+.error.active {
+    padding: 0.3em;
+}
