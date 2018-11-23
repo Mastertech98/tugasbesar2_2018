@@ -1,0 +1,91 @@
+body {
+    margin: 0;
+}
+
+header.top-menu {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    letter-spacing: 1px;
+}
+
+.container-top-bar {
+    background: #00aeef;
+    display: flow-root;
+}
+
+span {
+    cursor: default;
+}
+
+.logo {
+    float: left;
+    height: 64px;
+    line-height: 64px;
+    font-size: 32px;
+    font-weight: bolder;
+}
+
+.pro {
+    margin-left: 16px;
+    color: #f2d800;
+}
+
+.book {
+    color: white;
+}
+
+.greetings {
+    float: right;
+    height: 64px;
+    line-height: 64px;
+    margin-right: 16px;
+    font-size: 16px;
+    font-weight: lighter;
+    color: white;
+}
+
+.logout {
+    background: #f26600;
+    float: right;
+    width: 32px;
+    height: 32px;
+    padding: 16px;
+}
+
+img {
+    height: 100%;
+    width: 100%;
+}
+
+nav {
+    display: flex;
+}
+
+nav > * {
+    flex: 1;
+    text-align: center;
+    line-height: 64px;
+    background: #0094cc;
+    height: 64px;
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+nav > ::first-letter {
+    font-size: 32px;
+    font-weight: bolder;
+}
+
+nav > :hover {
+    background: #f26600;
+}
+
+nav > * + * {
+    border-left: 1px solid black;
+}
+
+body.browse a.browse, body.history a.history, body.profile a.profile {
+    background: #f26600;
+}

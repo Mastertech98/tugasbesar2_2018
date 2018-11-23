@@ -1,5 +1,5 @@
 <?php
-if (isset($_COOKIE['id'])) {
+if (isset($_COOKIE['access_token'])) {
     header("Location: /search-books/");
 } else {
     header("Location: /login/");
