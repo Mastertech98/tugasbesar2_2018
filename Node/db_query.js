@@ -4,7 +4,8 @@ var queryResult = function getQueryResult(sql,callback){
     db.connect();
     db.query(sql,function (err, result) {
         if (err) throw err;
-        callback(JSON.stringify(result));
+        // callback(JSON.stringify(result));
+        callback(result);
     });
     db.end();
 };
