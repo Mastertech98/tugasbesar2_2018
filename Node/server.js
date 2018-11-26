@@ -9,4 +9,6 @@ const cardRouter = require('./card-route');
 app.use('/card', cardRouter);
 
 // listen to port 7000
-app.listen(port)
+app.listen(port,function(){
+    console.log("Successfully connected to server at localhost:" + port);
+})
