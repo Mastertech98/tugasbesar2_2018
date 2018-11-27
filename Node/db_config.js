@@ -11,7 +11,7 @@ var queryResult = function getQueryResult(sql,callback){
     db.connect(function(err){
         db.query(sql,function (err, result) {
             if (err) throw err;
-            callback(result);
+                callback(result);
             db.end(); 
         });
     });
