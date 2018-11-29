@@ -20,12 +20,23 @@ switch ($_SERVER['REQUEST_METHOD']) {
 		$password = $mysqli->real_escape_string($_POST['password']);
 		$address = $mysqli->real_escape_string($_POST['address']);
 		$phone_number = $mysqli->real_escape_string($_POST['phone_number']);
+		$card_number = $mysqli->real_escape_string($_POST['card_number']);
 
 		//Error if username or email is already exists
 		if (!is_available("username", $username) || !is_available("email", $email)) {
 			http_response_code(409);
 			echo "User or email already exists!";
             echo '<br/><button type="button" onclick="window.history.back()">Back</button>';
+			exit;
+		}
+		
+		// Error if card does not exist
+		$card_response = file_get_contents('http://localhost:7000/card/check?cardNumber=' . $card_number);
+		$card_res_obj = json_decode($card_response);
+		if (!$card_res_obj->exist) {
+			http_response_code(409);
+			echo "Card does not exist";
+			echo '<br/><button type="button" onclick="window.history.back()">Back</button>';
 			exit;
 		}
 		
@@ -128,6 +139,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
 				<span>
 					<input type="tel" id="phone-number" name="phone_number" /><br />
 					<span id="phone-number-error"></span>
+				</span>
+			</div>
+			<div class="input">
+				<label for="card-number">Card Number</label>
+				<span>
+					<input type="tel" id="card-number" name="card_number" /><br />
+					<span id="card-number-error"></span>
 				</span>
 			</div>
 			<div class="hyperlink">
