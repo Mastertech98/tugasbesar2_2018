@@ -7,6 +7,7 @@ public class Book {
   private String id;
   private String title;
   private List<String> authors;
+  private List<String> categories;
   private String cover;
   private String desc;
   private int harga;
@@ -15,15 +16,17 @@ public class Book {
     id = "";
     title = "";
     authors = new ArrayList<String>();
+    categories = new ArrayList<String>();
     cover = "";
     desc = "";
     harga = 0;
   }
 
-  public Book(String tempid, String temptitle, List<String> tempauthors, String tempcover, String tempdesc, int tempharga){
+  public Book(String tempid, String temptitle, List<String> tempauthors, List<String> tempcat, String tempcover, String tempdesc, int tempharga){
     id = tempid;
     title = temptitle;
     authors = tempauthors;
+    categories = tempcat;
     cover = tempcover;
     desc = tempdesc;
     harga = tempharga;
@@ -39,6 +42,10 @@ public class Book {
 
   public List<String> getAuthors() {
     return authors;
+  }
+
+  public List<String> getCategories() {
+    return categories;
   }
 
   public String getCover() {

@@ -33,10 +33,11 @@ if (!isset($_COOKIE['access_token'])) {
             <div ng-show="error">Sorry no books Found :(</div>
             <ul ng-repeat="x in results" ng-show="showresult">
                 <li>
-                    <div class="book-cover"><img ng-src="/book-detail/cover/{{x.id}}.jpg" alt="No Cover" /></div>
+                    <div class="book-cover"><img ng-src="{{x.cover}}" alt="No Cover" /></div>
                     <div class="book-title">{{x.title}}</div>
-                    <div class="book-author-and-rating">{{x.author}} - {{x.rating | number: 1}}/5.0 ({{x.votes_count}} votes)</div>
-                    <div class="book-synopsis">{{x.synopsis}}</div>
+                    <div class="book-author-and-rating" ng-show="!(isArray(x.authors))">{{x.authors}} - {{x.rating | number: 1}}/5.0 ({{x.votes_count}} votes)</div>
+                    <div class="book-author-and-rating" ng-show="isArray(x.authors)">{{x.authors.join(", ")}} - {{x.rating | number: 1}}/5.0 ({{x.votes_count}} votes)</div>
+                    <div class="book-synopsis">{{x.desc}}</div>
                     <div class="book-detail"><a ng-href="/book-detail/?id={{x.id}}">Detail</a></div>
                 </li>
             </ul>

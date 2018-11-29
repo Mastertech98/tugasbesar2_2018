@@ -1,18 +1,38 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config.php";
 $data = json_decode(file_get_contents("php://input"));
-$title = $mysqli->real_escape_string($data->title);
-$output = array();
+$title = $data->title;
 
-$search_query = "SELECT *, (SELECT AVG(rating) FROM `order` WHERE book_id = book.id) AS rating, (SELECT COUNT(*) FROM `order` WHERE book_id = book.id AND rating IS NOT NULL) AS votes_count FROM book WHERE title LIKE '%$title%' ";
+$url = "http://localhost:9000/HelloWorld?wsdl";
+$client = new SoapClient($url);
+$result = (array)$client->searchBooksByTitle($title);
+$n_items = 0;
 
-$books = $mysqli->query($search_query);
-$output['length'] = $books->num_rows;
-sleep(3);
-if ($books->num_rows > 0) {
-    while($row = $books->fetch_array()){
-        $output[]= $row;
+try {
+    if (isset($result['item'])){
+        $n_items = sizeof($result['item']);
+        foreach($result['item'] as $x){
+            $search_query = "SELECT AVG(rating) as rating, count(*) as votes_count FROM `order` WHERE book_id = $x->id ";
+            $books = $mysqli->query($search_query);
+            if (!$books) {
+                $x->rating = '0';
+                $x->votes_count = '0';
+            } else {
+                $row = $books->fetch_assoc();
+                $x->rating = $row['rating'];
+                $x->votes_count = $row['votes_count'];
+            }
+        }
     }
-    echo json_encode($output);
+} catch (Exception $e) {
+    $n_items = 0;
+}
+
+if ($n_items > 0) {
+    echo json_encode($result);
+}
+else {
+    $temp = array("item" => array());
+    echo json_encode($temp);
 }
 ?>

@@ -1,5 +1,6 @@
 var app = angular.module("myapp", [])
 app.controller("mycontroller", function($scope, $http){
+    $scope.isArray = angular.isArray;
     $scope.showresultcount = false;
     $scope.showloading = false;
     $scope.error = false;
@@ -12,12 +13,12 @@ app.controller("mycontroller", function($scope, $http){
             "search-result.php",
             {'title':$scope.title}
         ).then(function(data){
-            console.log(data.data.length);
+            console.log(data);
             $scope.showloading = false;
-            $scope.showresultcount = true;
+            $scope.showresultcount = (data.data.item.length);
             $scope.showresult = true;
-            $scope.results = data.data;
-            $scope.error = !(data.data.length);
+            $scope.results = data.data.item;
+            $scope.error = !(data.data.item.length);
         })
     }
 });

@@ -15,9 +15,9 @@ public class Books {
   private ArrayList<Book> booklist =  new ArrayList<Book>();
   public static String key = "AIzaSyBvlZ10cXAs93BbX-F5ZnYaWnzKhFPTGcU";
 
-  public Books(String title){
+  public Books(String title, String param){
     title = title.replace(" ", "+");
-    String link = "https://www.googleapis.com/books/v1/volumes?q=intitle:" + title + "&maxResults=20&filter=partial&key=" + key;
+    String link = "https://www.googleapis.com/books/v1/volumes?q=" + param + ":" + title + "&maxResults=20&filter=partial";
     try {
       String response = getResponse(link);
 
@@ -42,22 +42,29 @@ public class Books {
         catch (NullPointerException e){
           authors.add("Anonymous");
         }
+
+        ArrayList<String> categories = new ArrayList<String>();
+        try {
+          JsonArray response_categories = temp.get("volumeInfo").getAsJsonObject().getAsJsonArray("categories");
+          for (JsonElement category : response_categories) {
+            categories.add(category.getAsString());
+          }
+        }
+        catch (NullPointerException e){
+          categories.add("none");
+        }
+
         String cover = temp.get("volumeInfo").getAsJsonObject().get("imageLinks").getAsJsonObject().get("thumbnail").getAsString();
         String desc;
         try {
           desc = temp.get("volumeInfo").getAsJsonObject().get("description").getAsString();
         }
         catch(NullPointerException e){
-          desc = "none";
+          desc = "Tidak Ada Deskripsi";
         }
-        int harga = 0;
-        if (!temp.get("saleInfo").getAsJsonObject().get("saleability").getAsString().equals("NOT_FOR_SALE")) {
-          harga = temp.get("saleInfo").getAsJsonObject().get("listPrice").getAsJsonObject().get("amount").getAsInt();
-        }
-        else {
-          harga = -999;
-        }
-        Book tempbook = new Book(id, booktitle, authors, cover, desc, harga);
+        int harga = -999;
+
+        Book tempbook = new Book(id, booktitle, authors, categories, cover, desc, harga);
         booklist.add(tempbook);
         System.out.println(tempbook);
       }
@@ -93,6 +100,10 @@ public class Books {
     }
   }
 
+  public ArrayList<Book> getBooklist() {
+    return booklist;
+  }
+
   @Override
   public String toString(){
     StringBuilder result = new StringBuilder();
@@ -100,9 +111,5 @@ public class Books {
       result.append(book.toString());
     }
     return result.toString();
-  }
-
-  public static void main(String[] argv) {
-    Books hello = new Books("harry potter");
   }
 }
