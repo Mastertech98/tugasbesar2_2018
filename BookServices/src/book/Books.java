@@ -69,7 +69,7 @@ public class Books {
   public Books(String title, String param){
     title = title.replace(" ", "+");
     title = "\"" + title + "\"";
-    String link = "https://www.googleapis.com/books/v1/volumes?q=" + param + ":" + title + "&maxResults=20&filter=partial";
+    String link = "https://www.googleapis.com/books/v1/volumes?q=" + param + ":" + title + "&maxResults=20";
     try {
       String response = getResponse(link);
 

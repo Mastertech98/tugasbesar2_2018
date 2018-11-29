@@ -47,7 +47,14 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $book['synopsis'] = $result['desc'];
         $book['cover'] = $result['cover'];
         $book['categories'] = $result['categories'];
+        $book['price'] = $result['harga'] < 0 ? "NOT FOR SALE" : $result['harga'];
 
+        if (!is_array($book['categories'])){
+            $rec = (array)$client->getRecommendation(array($book['categories']));
+        }
+        else{
+            $rec = (array)$client->getRecommendation($book['categories']);
+        }
         break;
     case 'POST':
         require_once $_SERVER['DOCUMENT_ROOT'] . "/config.php";
@@ -124,7 +131,14 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     <span id="quantity-error"></span>
                 </div>
                 <div class="button">
-                    <button>Order</button>
+                    <?php 
+                        if(!strcmp($book['price'],"NOT FOR SALE")){
+                            echo "<button disabled>". $book['price']. "</button>";
+                        }
+                        else{
+                            echo "<button>". $book['price']. "</button>";
+                        }
+                    ?>
                 </div>
             </form>
         </section>
@@ -146,6 +160,19 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 </li>
                 <?php } ?>
             </ul>
+        </section>
+        <section>
+            <h2>Recommendation</h2>
+            <?php 
+                if ($rec['id']){
+                    echo "<div class=\"cover-rec\"><img src=\"". $rec['cover'] ."\" alt=\"No Cover\" /></div>
+                    <div class=\"detail-rec\"><a href=\"/book-detail/?id=". $rec['id'] ."\">Detail</a></div>";
+                }
+                else {
+                    echo "<div class=\"detail-rec\"><a href=\"/search-books\">Browse</a></div>";
+                }
+            ?>
+            
         </section>
     </main>
     <div class="modal">
