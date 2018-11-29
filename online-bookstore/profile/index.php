@@ -16,7 +16,7 @@ $id = $mysqli->query("SELECT id FROM user WHERE access_token = '$access_token'")
 $id = $id->fetch_assoc();
 $id = $id['id'];
 
-$profile_query = "SELECT name, username, email, address, phone_number AS 'phone number' FROM `user` WHERE id = '$id'";
+$profile_query = "SELECT name, username, email, address, phone_number AS 'phone number', card AS 'card number' FROM `user` WHERE id = '$id'";
 
 if (!$profiles = $mysqli->query($profile_query)) {
     echo "Failed to run query: (" . $mysqli->errno . ") " . $mysqli->error;
