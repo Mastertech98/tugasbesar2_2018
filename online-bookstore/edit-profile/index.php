@@ -13,7 +13,7 @@ $id = $id['id'];
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-        $profile_query = "SELECT name, address, phone_number FROM `user` WHERE id = '$id'";
+        $profile_query = "SELECT name, address, phone_number, card FROM `user` WHERE id = '$id'";
 
         if (!$profiles = $mysqli->query($profile_query)) {
             echo "Failed to run query: (" . $mysqli->errno . ") " . $mysqli->error;
@@ -37,8 +37,18 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $name = $mysqli->real_escape_string($_POST['name']);
         $address = $mysqli->real_escape_string($_POST['address']);
         $phone_number = $mysqli->real_escape_string($_POST['phone_number']);
+        $card_number = $mysqli->real_escape_string($_POST['card_number']);
         
-        $register_query = "UPDATE user SET name = '$name', address = '$address', phone_number = '$phone_number'";
+        $card_response = file_get_contents('http://localhost:7000/card/check?cardNumber=' . $card_number);
+        $card_res_obj = json_decode($card_response);
+        if (!$card_res_obj->exist) {
+			http_response_code(409);
+			echo "Card is invalid";
+			echo '<br/><button type="button" onclick="window.history.back()">Back</button>';
+			exit;
+		}
+
+        $register_query = "UPDATE user SET name = '$name', address = '$address', phone_number = '$phone_number', card = $card_number WHERE id = '$id'";
 
         if (!$result = $mysqli->query($register_query)) {
             echo "Failed to run query: (" . $mysqli->errno . ") " . $mysqli->error;
@@ -94,6 +104,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 <label for="phone-number">Phone Number</label>
                 <span>
                     <input type="tel" id="phone-number" name="phone_number" value="<?= $profile['phone_number'] ?>" /><br />
+                    <span id="phone-number-error"></span>
+                </span>
+            </div>
+            <div class="input">
+                <label for="card-number">Card Number</label>
+                <span>
+                    <input type="tel" id="card-number" name="card_number" value="<?= $profile['card'] ?>" /><br />
                     <span id="phone-number-error"></span>
                 </span>
             </div>

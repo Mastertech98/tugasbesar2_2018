@@ -35,13 +35,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
 		$card_res_obj = json_decode($card_response);
 		if (!$card_res_obj->exist) {
 			http_response_code(409);
-			echo "Card does not exist";
+			echo "Card is invalid";
 			echo '<br/><button type="button" onclick="window.history.back()">Back</button>';
 			exit;
 		}
 		
 		//Register insert user data into the database
-		$register_query = "INSERT INTO user (name, username, email, password, address, phone_number) VALUES ('$name', '$username', '$email', '$password', '$address', '$phone_number')";
+		$register_query = "INSERT INTO user (name, username, email, password, address, phone_number, card) VALUES ('$name', '$username', '$email', '$password', '$address', '$phone_number', $card_number)";
 
 		if (!$result = $mysqli->query($register_query)) {
 			echo "Failed to run query: (" . $mysqli->errno . ") " . $mysqli->error;
