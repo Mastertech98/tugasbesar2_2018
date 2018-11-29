@@ -10,17 +10,36 @@ $n_items = 0;
 
 try {
     if (isset($result['item'])){
-        $n_items = sizeof($result['item']);
-        foreach($result['item'] as $x){
-            $search_query = "SELECT AVG(rating) as rating, count(*) as votes_count FROM `order` WHERE book_id = $x->id ";
-            $books = $mysqli->query($search_query);
-            if (!$books) {
-                $x->rating = '0';
-                $x->votes_count = '0';
-            } else {
-                $row = $books->fetch_assoc();
-                $x->rating = $row['rating'];
-                $x->votes_count = $row['votes_count'];
+        $n_items = 1;
+        if (is_array($result['item'])){
+            foreach($result['item'] as $x){
+                if(isset($x->id)){
+                    $search_query = "SELECT AVG(rating) as rating, count(*) as votes_count FROM `order` WHERE book_id ='". $x->id ."'";
+                    $books = $mysqli->query($search_query);
+                    if (!$books) {
+                        $x->rating = '0';
+                        $x->votes_count = '0';
+                    } else {
+                        $row = $books->fetch_assoc();
+                        $x->rating = $row['rating'];
+                        $x->votes_count = $row['votes_count'];
+                    }
+                }         
+            }
+        }
+        else{
+            if(isset($result['item']->id)){ 
+                $search_query = "SELECT AVG(rating) as rating, count(*) as votes_count FROM `order` WHERE book_id = '" . $result['item']->id . "'";
+                $books = $mysqli->query($search_query);
+                if (!$books) {
+                    $result['item']->rating = '0';
+                    $result['item']->votes_count = '0';
+                } else {
+                    $row = $books->fetch_assoc();
+                    $result['item']->rating = $row['rating'];
+                    $result['item']->votes_count = $row['votes_count'];
+                }
+                $result['item'] = array($result['item']);
             }
         }
     }
