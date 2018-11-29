@@ -106,7 +106,14 @@ public class Books {
           categories.add("none");
         }
 
-        String cover = temp.get("volumeInfo").getAsJsonObject().get("imageLinks").getAsJsonObject().get("thumbnail").getAsString();
+        String cover;
+        try {
+          cover = temp.get("volumeInfo").getAsJsonObject().get("imageLinks").getAsJsonObject().get("thumbnail").getAsString();
+        }
+        catch (NullPointerException e){
+          cover = "";
+        }
+
         String desc;
         try {
           desc = temp.get("volumeInfo").getAsJsonObject().get("description").getAsString();
