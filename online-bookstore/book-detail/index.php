@@ -12,10 +12,14 @@ switch ($_SERVER['REQUEST_METHOD']) {
             http_response_code(400);
             exit;
         }
-
         $book_id = $mysqli->real_escape_string($_GET['id']);
 
-        $book_query = "SELECT title, author, synopsis, AVG(rating) AS rating FROM (SELECT * FROM `book` WHERE id = '$book_id') AS `book` LEFT OUTER JOIN `order` ON book.id = book_id";
+        $url = "http://localhost:9000/HelloWorld?wsdl";
+        $client = new SoapClient($url);
+        $result = (array)$client->searchBookByID($book_id);
+        
+        //title, author, synopsis
+        $book_query = "SELECT AVG(rating) AS rating FROM `order` WHERE book_id = '$book_id'";
         $review_query = "SELECT buyer_id, username, comments, rating FROM (SELECT buyer_id, comments, rating FROM `order` WHERE book_id = '$book_id' AND rating IS NOT NULL) AS `review` JOIN `user` ON user.id = buyer_id";
 
         $books = $mysqli->query($book_query);
@@ -26,6 +30,23 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
 
         $book = $books->fetch_assoc();
+        $book['title'] = $result['title'];
+        $book['author'] = "";
+        if (!is_array($result['authors'])){
+            $book['author'] = $result['authors'];
+        }
+        else{
+            $last = count($result['authors']) - 1;
+            for($i = 0; $i <= $last ; $i++){
+                if ($i == 0){
+                    $book['author'] = $result['authors'][$i];
+                }
+                $book['author'] = $book['author'] . ', ' . $result['authors'][$i];
+            }
+        }
+        $book['synopsis'] = $result['desc'];
+        $book['cover'] = $result['cover'];
+        $book['categories'] = $result['categories'];
 
         break;
     case 'POST':
@@ -70,7 +91,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     <main>
         <section>
             <span class="right">
-                <div class="book-cover"><img src="/book-detail/cover/<?= $book_id ?>.jpg" alt="cover of <?= $book['title'] ?>" /></div>
+                <div class="book-cover"><img src=<?= $book['cover'] ?> alt="cover of <?= $book['title'] ?>" /></div>
                 <div class="rating">
                     <div class="stars">
                         <?php for ($i = 1; $i <= 5; $i++) { ?><img src="<?= $i <= $book['rating'] ? "full-star" : "empty-star" ?>.png" /><?php } ?>

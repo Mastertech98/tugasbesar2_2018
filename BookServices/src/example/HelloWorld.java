@@ -24,7 +24,17 @@ public class HelloWorld {
     Book[] result = new Book[temp.size()];
     for (int i = 0; i<temp.size(); i++){
       result[i] = temp.get(i);
+      System.out.println(result[i].getCategories());
     }
+    return result;
+  }
+
+  @WebMethod
+  public Book searchBookByID(String id){
+    Books tempres = new Books(id);
+    ArrayList<Book> temp = tempres.getBooklist();
+    Book result = temp.get(0);
+    System.out.println(result.getCategories());
     return result;
   }
 

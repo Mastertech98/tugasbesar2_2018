@@ -84,6 +84,10 @@ public class Book {
     this.harga = harga;
   }
 
+  public void setCategories(List<String> categories) {
+    this.categories = categories;
+  }
+
   @Override
   public String toString(){
     return ("id: "+ this.id + ", title: " + this.title + ", harga: " + this.harga);
