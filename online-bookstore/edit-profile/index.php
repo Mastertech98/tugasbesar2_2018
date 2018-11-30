@@ -117,7 +117,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 <label for="card-number">Card Number</label>
                 <span>
                     <input type="tel" id="card-number" name="card_number" value="<?= $profile['card'] ?>" /><br />
-                    <span id="phone-number-error"></span>
+                    <span id="card-number-error"></span>
                 </span>
             </div>
             <div class="button">
