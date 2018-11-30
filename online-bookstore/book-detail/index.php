@@ -67,8 +67,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $buyer_id = $mysqli->real_escape_string($id);
         $book_id = $mysqli->real_escape_string($_POST['id']);
         $quantity = $mysqli->real_escape_string($_POST['quantity']);
+        $book_title = $mysqli->real_escape_string($_POST['title']);
+        $book_cover = $mysqli->real_escape_string(urldecode($_POST['cover']));
+        $book_author = $mysqli->real_escape_string($_POST['author']);
 
-        $order_query = "INSERT INTO `order`(buyer_id, book_id, quantity, order_date) VALUES ('$buyer_id', '$book_id', '$quantity', CURRENT_DATE())";
+        $order_query = "INSERT INTO `order`(buyer_id, book_id, quantity, order_date, book_title, author, cover) VALUES ('$buyer_id', '$book_id', '$quantity', CURRENT_DATE(), '$book_title', '$book_author', '$book_cover')";
 
         if (!$order = $mysqli->query($order_query)) {
             echo "Failed to run query: (" . $mysqli->errno . ") " . $mysqli->error;
@@ -118,6 +121,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
             <h2>Order</h2>
             <form method="post">
                 <input type="hidden" name="id" id="id" value="<?= $book_id ?>" />
+                <input type="hidden" name="author" id="author" value="<?= $book['author'] ?>" />
+                <input type="hidden" name="cover" id="cover" value="<?= urlencode($book['cover']) ?>" />
+                <input type="hidden" name="title" id="title" value="<?= $book['title'] ?>" />
                 <div class="input">
                     <label for="quantity">Quantity:</label>
                     <input type="number" name="quantity" id="quantity" list="quantity-option" onclick="this.select()" />
@@ -136,7 +142,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                             echo "<button disabled>". $book['price']. "</button>";
                         }
                         else{
-                            echo "<button>". $book['price']. "</button>";
+                            echo "<button> Rp ". $book['price']. "<br/> Click to Order</button>";
                         }
                     ?>
                 </div>
