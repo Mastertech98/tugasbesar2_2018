@@ -16,6 +16,7 @@ document.querySelector('form button').addEventListener('click', function(e) {
     
         httpRequest.open('POST', '/book-detail/');
         httpRequest.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        httpRequest.send('id=' + document.querySelector('form #id').value + '&quantity=' + quantityValue);
+        console.log(document.querySelector('form #cover').value);
+        httpRequest.send('id=' + document.querySelector('form #id').value + '&quantity=' + quantityValue + '&author=' + document.querySelector('form #author').value + '&title=' + document.querySelector('form #title').value + '&cover=' + document.querySelector('form #cover').value);
     }
 });
