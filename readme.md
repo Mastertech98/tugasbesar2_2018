@@ -49,7 +49,7 @@ response.addCookie( cookie );`
 - Mengambil IP address user
 - Mengambil informasi browser user
 - Masukkan nilai token ke dalam database akses_info
-- Membuat cookie dengan expire time yang dusah ditentukan
+- Membuat cookie dengan expire time yang dusah ditentukan (expire time hanya dibangkitkan sekali setelah dibuat)
 
 ## Kelebihan dan Kekurangan
 ### Kelebihan
