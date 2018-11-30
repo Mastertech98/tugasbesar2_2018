@@ -14,7 +14,7 @@ try {
         if (is_array($result['item'])){
             foreach($result['item'] as $x){
                 if(isset($x->id)){
-                    $search_query = "SELECT AVG(rating) as rating, count(*) as votes_count FROM `order` WHERE book_id ='". $x->id ."'";
+                    $search_query = "SELECT AVG(rating) as rating, COUNT(rating) as votes_count FROM `order` WHERE book_id ='". $x->id ."'";
                     $books = $mysqli->query($search_query);
                     if (!$books) {
                         $x->rating = '0';
@@ -29,7 +29,7 @@ try {
         }
         else{
             if(isset($result['item']->id)){ 
-                $search_query = "SELECT AVG(rating) as rating, count(*) as votes_count FROM `order` WHERE book_id = '" . $result['item']->id . "'";
+                $search_query = "SELECT AVG(rating) as rating, COUNT(rating) as votes_count FROM `order` WHERE book_id = '" . $result['item']->id . "'";
                 $books = $mysqli->query($search_query);
                 if (!$books) {
                     $result['item']->rating = '0';
