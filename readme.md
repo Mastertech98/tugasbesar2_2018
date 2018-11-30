@@ -38,7 +38,7 @@ HttpServletResponse response) {
 Data data = new Data();
 request.setAttribute("data", data);
 response.addCookie( cookie );`
--Session handling :
+- Session handling :
     - cookies
     - URL rewriting
     - hidden form fields
