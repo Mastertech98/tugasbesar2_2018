@@ -40,7 +40,7 @@ if (getAccessToken($access_token, $mysqli)->num_rows == 0) {
                 <button ng-click="search()">Search</button>
             </div>
             <div class="loadingcontainer" ng-show="showloading"><img class="loading" src="loading.gif"/></div>
-            <div class="found-result" ng-show="showresultcount">Found <span id="result-count">{{results.length}}</span> result(s)</div>
+            <div class="found-result" ng-show="showresultcount">Found <span id="result-count"><input ng-model="showresultcount" readonly></span> result(s)</div>
             <div ng-show="error">Sorry no books Found :(</div>
             <ul ng-repeat="x in results" ng-show="showresult">
                 <li>
