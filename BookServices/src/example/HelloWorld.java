@@ -6,9 +6,12 @@ import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.xml.ws.Endpoint;
+import javax.xml.ws.Response;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -122,8 +125,11 @@ public class HelloWorld {
       Connection myConn = DriverManager.getConnection("JDBC:mysql://localhost:3307/book_service", "root", "");
       Statement myStmt = myConn.createStatement();
       Client client= ClientBuilder.newClient();
-      WebTarget target = client.target("http://localhost/transaction?sender="+ accountNumber + "&receiver=098778907654&amount=bookCount");
-      System.out.println(target.request(MediaType.TEXT_XML).get(String.class));
+      //WebTarget target = client.target("http://localhost:7000/transaction?sender="+ accountNumber + "&receiver=098778907654&amount=" + bookCount);
+      WebTarget webTarget = client.target("http://localhost:7000/transaction?sender="+ accountNumber + "&receiver=098778907654&amount=" + bookCount);
+      Form form = new Form();
+      javax.ws.rs.core.Response response = webTarget.request().post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED));
+      System.out.println(response);
 
     } catch (Exception e){
       e.printStackTrace();
