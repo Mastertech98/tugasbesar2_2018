@@ -1,8 +1,19 @@
 <?php
+
+require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/at-config.php';
+
 if (!isset($_COOKIE['access_token'])) {
     header("Location: /login/");
     exit;
 }
+
+$access_token = $_COOKIE['access_token'];
+if (getAccessToken($access_token, $mysqli)->num_rows == 0) {
+    header("Location: /login/");
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +28,7 @@ if (!isset($_COOKIE['access_token'])) {
 </head>
 
 <body class="browse">
-    <?php include '../header.php' ?>
+    <?php include_once '../header.php' ?>
     <main>
         <h1>Search Books</h1> 
         <div ng-app="myapp" ng-controller="mycontroller">

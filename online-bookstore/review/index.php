@@ -1,13 +1,20 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/at-config.php';
+
 if (!isset($_COOKIE['access_token'])) {
+    header("Location: /login/");
+    exit;
+}
+
+$access_token = $_COOKIE['access_token'];
+if (getAccessToken($access_token, $mysqli)->num_rows == 0) {
     header("Location: /login/");
     exit;
 }
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-        require_once $_SERVER['DOCUMENT_ROOT'] . "/config.php";
-
         if (!isset($_GET['id'])) {
             http_response_code(400);
             exit;
@@ -45,8 +52,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
         break;
     case 'POST':
-        require_once $_SERVER['DOCUMENT_ROOT'] . "/config.php";
-
         $id = $mysqli->real_escape_string($_POST['id']);
         $rating = $mysqli->real_escape_string($_POST['rating']);
         $comments = $mysqli->real_escape_string($_POST['comments']);

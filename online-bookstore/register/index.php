@@ -1,10 +1,15 @@
 <?php
-define('COOKIE_EXPIRY_TIME', 1800);
+
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . '/at-config.php';
 
 //If user is logged in, redirect to search-books page
 if (isset($_COOKIE['access_token'])) {
-	header("Location: /search-books/");
-	exit;
+    $access_token = $_COOKIE['access_token'];
+    if (getAccessToken($access_token, $mysqli)->num_rows != 0) {
+        header("Location: /search-books/");
+        exit;
+    }
 }
 
 switch ($_SERVER['REQUEST_METHOD']) {
@@ -58,14 +63,19 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
         $id = $ids->fetch_assoc();
         
-        $access_token = rand(0, 99999999);
         $id = $id['id'];
-        $update_access_token_query = "UPDATE `user` SET access_token = '$access_token' WHERE id = '$id'";
+        $access_token = generateAccessToken();
+        $user_browser = getUserBrowser();
+        $user_ip = getUserIP();
+        $expiry_time = generateExpiryTime();
         
-        while (!$mysqli->query($update_access_token_query)){
-            $access_token = rand();
-        }
-
+        // $update_access_token_query = "UPDATE `user` SET access_token = '$access_token' WHERE id = '$id'";
+        $insert_access_token_query = "INSERT INTO access_info (token, user_id, user_browser, user_ip, expiry_time) VALUES ($access_token, $id, '$user_browser', '$user_ip', '$expiry_time')";
+        
+        while (!$mysqli->query($insert_access_token_query)) {
+            $access_token = generateAccessToken();
+		}
+		
 		setcookie("access_token", $access_token, time() + COOKIE_EXPIRY_TIME, "/");
 		
 		//Redirect to search-books page

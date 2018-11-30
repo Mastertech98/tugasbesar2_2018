@@ -1,15 +1,21 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/at-config.php';
+
 if (!isset($_COOKIE['access_token'])) {
     header("Location: /login/");
     exit;
 }
 
-require_once $_SERVER['DOCUMENT_ROOT'] . "/config.php";
-
 $access_token = $_COOKIE['access_token'];
-$id = $mysqli->query("SELECT id FROM user WHERE access_token = '$access_token'");
+if (getAccessToken($access_token, $mysqli)->num_rows == 0) {
+    header("Location: /login/");
+    exit;
+}
+
+$id = $mysqli->query("SELECT * FROM access_info WHERE token = $access_token");
 $id = $id->fetch_assoc();
-$id = $id['id'];
+$id = $id['user_id'];
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':

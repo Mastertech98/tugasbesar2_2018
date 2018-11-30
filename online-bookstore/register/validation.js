@@ -9,7 +9,7 @@ var passwordError = document.querySelector('#password-error');
 var confirmPasswordError = document.querySelector('#confirm-password-error');
 var addressError = document.querySelector('#address-error');
 var phoneNumberError = document.querySelector('#phone-number-error');
-var cardNumberError = document.querySelector('#phone-number-error');
+var cardNumberError = document.querySelector('#card-number-error');
 
 addValidation(form, '#name', nameError, isNameValid, 'Your name needs to be between 20 characters long or less');
 addValidation(form, '#username', usernameError);
