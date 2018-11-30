@@ -50,18 +50,17 @@
 
 ## Pembagian Tugas
 REST :
-1. Validasi nomor kartu : 1351xxxx
-2. ...
+1. Koneksi nodejs ke mysql : 13516026
+2. Membuat service validasi kartu : 13516134
+3. Membuat service transfer : 13516050
 
 SOAP :
-1. Add Produce : 1351xxxx
-2. Fungsionalitas Y : 1351xxxx
-3. ...
+1. Pembelian : 13516026
+2. Rekomendasi : 13516134
+3. Pencarian buku dan pengambilan detail : 13516050
 
 Perubahan Web app :
 1. Halaman Search : 
-2. Halaman X :
-3. ...
 
 ## About
 
