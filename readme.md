@@ -21,6 +21,28 @@
 - total_bought(book_id, category, n_bought)
 
 ## Konsep Shared Session
+- Shared session di java menggunakan : `javax.servlet.HttpSession`
+- Pada level aplikasi, menggunakan : 
+`ServletContext ctx = getServletContext();
+Data data = new Data();
+ctx.setAttribute("data", data);`
+- Pada level session, menggunakan : 
+`protected doPost(HttpServletRequest request,
+HttpServletResponse) {
+HttpSession session = request.getSession();
+Data data = new Data();
+session.setAttribute("data", data);`
+- Pada level request, menggunakan :
+`protected doPost(HttpServletRequest request,
+HttpServletResponse response) {
+Data data = new Data();
+request.setAttribute("data", data);
+response.addCookie( cookie );`
+-Session handling :
+    - cookies
+    - URL rewriting
+    - hidden form fields
+- Servlet menyediakan HttpSession mechanism menggunakan cookie `JSESSIONID`
 
 ## Mekanisme Pembangkitan Token dan Expiry Time
 
