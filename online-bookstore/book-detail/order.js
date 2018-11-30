@@ -9,8 +9,15 @@ document.querySelector('form button').addEventListener('click', function(e) {
     
         httpRequest.onreadystatechange = function () {
             if (httpRequest.readyState === XMLHttpRequest.DONE) {
-                document.querySelector('#order-id').textContent = httpRequest.responseText;
-                document.querySelector('.modal').style.display = 'flex';
+                var responsee = httpRequest.responseText;
+                if (responsee == "Balance is not enough" || responsee == "Card number is invalid" || responsee == "Error when updating sender's balance" || responsee == "Error when updating receiver's balance" || responsee == "Error when inserting transaction" || responsee == "Error commiting changes"){
+                    document.querySelector('#messagewindow').textContent = responsee;
+                    document.querySelector('#checkpicture').style.display = 'none';
+                    document.querySelector('.modal').style.display = 'flex';
+                } else{
+                    document.querySelector('#order-id').textContent = responsee;
+                    document.querySelector('.modal').style.display = 'flex';
+                }
             }
         };
     

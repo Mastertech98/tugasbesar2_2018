@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="06a1e6eb-edeb-40b8-8c05-5eba94342f26" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/example/BookWS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/example/BookWS.java" afterDir="false" />
-    </list>
+    <list default="true" id="06a1e6eb-edeb-40b8-8c05-5eba94342f26" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,8 +22,8 @@
       <file leaf-file-name="BookWS.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/example/BookWS.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="123" column="6" selection-start-line="123" selection-start-column="6" selection-end-line="123" selection-end-column="6" />
+            <state relative-caret-position="209">
+              <caret line="156" column="19" lean-forward="true" selection-start-line="156" selection-start-column="19" selection-end-line="156" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -275,12 +273,12 @@
       <workItem from="1543285094354" duration="2037000" />
       <workItem from="1543565981679" duration="4539000" />
       <workItem from="1543574327669" duration="1309000" />
-      <workItem from="1543590167312" duration="2258000" />
+      <workItem from="1543590167312" duration="2539000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36647000" />
+    <option name="totallyTimeSpent" value="36928000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -734,8 +732,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/example/BookWS.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="123" column="6" selection-start-line="123" selection-start-column="6" selection-end-line="123" selection-end-column="6" />
+        <state relative-caret-position="209">
+          <caret line="156" column="19" lean-forward="true" selection-start-line="156" selection-start-column="19" selection-end-line="156" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

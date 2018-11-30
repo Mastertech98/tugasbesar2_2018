@@ -84,16 +84,21 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $client = new SoapClient($url);
         $result = $client->orderBook($book_id, $quantity, $card);
         
-        $order_query = "INSERT INTO `order`(buyer_id, book_id, quantity, order_date) VALUES ('$buyer_id', '$book_id', '$quantity', CURRENT_DATE())";
+        if (!strcmp($result, "Transaction success")){
+            $order_query = "INSERT INTO `order`(buyer_id, book_id, quantity, order_date) VALUES ('$buyer_id', '$book_id', '$quantity', CURRENT_DATE())";
 
-        if (!$order = $mysqli->query($order_query)) {
-            echo "Failed to run query: (" . $mysqli->errno . ") " . $mysqli->error;
+            if (!$order = $mysqli->query($order_query)) {
+                echo "Failed to run query: (" . $mysqli->errno . ") " . $mysqli->error;
+                exit;
+            }
+
+            http_response_code(202);
+            echo $mysqli->insert_id;
             exit;
         }
-
-        http_response_code(202);
-        echo $mysqli->insert_id;
-        exit;
+        else{
+            echo $result;
+        }
     default:
         http_response_code(405);
         exit;
@@ -197,8 +202,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 <button class="modal-close" type="button">✖</button>
             </div>
             <div class="modal-content">
-                <img class="check" src="check.png" alt="icon of check" />
-                <div class="message">
+                <img class="check" id="checkpicture" src="check.png" alt="icon of check" />
+                <div class="message" id="messagewindow">
                     <b>Order Success!</b><br />
                     Transaction Number: <span id="order-id"></span>
                 </div>
