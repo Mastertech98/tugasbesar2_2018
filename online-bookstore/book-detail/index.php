@@ -74,8 +74,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $card_query = "SELECT card FROM user WHERE id = '$id'";
         $card = $mysqli->query($card_query);
         $card = $card->fetch_assoc();
-        $card = $card['card'];
-
+        $card = $card['card'] + 0;
+        
         $buyer_id = $mysqli->real_escape_string($id);
         $book_id = $mysqli->real_escape_string($_POST['id']);
         $quantity = $mysqli->real_escape_string($_POST['quantity']);
@@ -83,8 +83,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $url = "http://localhost:9000/BookWS?wsdl";
         $client = new SoapClient($url);
         $result = $client->orderBook($book_id, $quantity, $card);
-        var_dump($result);
-
+        
         $order_query = "INSERT INTO `order`(buyer_id, book_id, quantity, order_date) VALUES ('$buyer_id', '$book_id', '$quantity', CURRENT_DATE())";
 
         if (!$order = $mysqli->query($order_query)) {
