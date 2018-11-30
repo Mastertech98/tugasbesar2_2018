@@ -16,6 +16,7 @@ document.querySelector('form button').addEventListener('click', function(e) {
     
         httpRequest.open('POST', '/book-detail/');
         httpRequest.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        console.log(document.querySelector('form #id').value);
         httpRequest.send('id=' + document.querySelector('form #id').value + '&quantity=' + quantityValue);
     }
 });

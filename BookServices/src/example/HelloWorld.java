@@ -126,7 +126,7 @@ public class HelloWorld {
   }
 
   @WebMethod
-  public boolean orderBook(String bookID, int bookCount, long accountNumber){
+  public String orderBook(String bookID, int bookCount, long accountNumber){
     try {
       Book temp = new Books(bookID).getBooklist().get(0);
       ArrayList<String> categories = (ArrayList<String>) temp.getCategories();
@@ -141,7 +141,7 @@ public class HelloWorld {
         price = myRs.getInt("price");
       }
       int total = price * bookCount;
-      String insert = "INSERT INTO total_bought(book_id, category, n_bought) VALUES (" + bookID + "," + category + "," + bookCount + ");";
+      String insert = "INSERT INTO total_bought(book_id, category, n_bought) VALUES ('" + bookID + "','" + category + "'," + bookCount + ");";
       Statement ins_statement = myConn.createStatement();
       int ins_res = ins_statement.executeUpdate(insert);
 
@@ -164,7 +164,7 @@ public class HelloWorld {
         in.close();
         JsonParser jsonParser = new JsonParser();
         JsonObject jo = (JsonObject)jsonParser.parse(response.toString());
-        return jo.get("success").getAsBoolean();
+        return jo.get("message").getAsString();
       }
       catch (Exception e) {
         e.printStackTrace();
@@ -172,7 +172,7 @@ public class HelloWorld {
     } catch (Exception e){
       e.printStackTrace();
     }
-    return true;
+    return "No Return";
   }
 
   public static void main(String[] argv) {

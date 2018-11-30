@@ -67,14 +67,23 @@ switch ($_SERVER['REQUEST_METHOD']) {
         // require_once $_SERVER['DOCUMENT_ROOT'] . "/config.php";
 
         // $access_token = $_COOKIE['access_token'];
-        $id = $mysqli->query("SELECT * FROM access_info WHERE access_token = '$access_token'");
-        var_dump($id);
+        $id = $mysqli->query("SELECT * FROM access_info WHERE token = '$access_token'");
         $id = $id->fetch_assoc();
         $id = $id['user_id'];
+
+        $card_query = "SELECT card FROM user WHERE id = '$id'";
+        $card = $mysqli->query($card_query);
+        $card = $card->fetch_assoc();
+        $card = $card['card'];
 
         $buyer_id = $mysqli->real_escape_string($id);
         $book_id = $mysqli->real_escape_string($_POST['id']);
         $quantity = $mysqli->real_escape_string($_POST['quantity']);
+
+        $url = "http://localhost:9000/HelloWorld?wsdl";
+        $client = new SoapClient($url);
+        $result = $client->orderBook($book_id, $quantity, $card);
+        var_dump($result);
 
         $order_query = "INSERT INTO `order`(buyer_id, book_id, quantity, order_date) VALUES ('$buyer_id', '$book_id', '$quantity', CURRENT_DATE())";
 
