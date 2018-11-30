@@ -60,7 +60,10 @@ SOAP :
 3. Pencarian buku dan pengambilan detail : 13516050
 
 Perubahan Web app :
-1. Halaman Search : 
+1. Halaman Search : Search page dan search result digabungkan 
+2. Halaman History dan Review : pengambilan dari web service
+3. Halaman Profile dan Efit profile : penambahan nomor kartu
+4. Halaman detail buku : penambahan rekomendasi
 
 ## About
 
