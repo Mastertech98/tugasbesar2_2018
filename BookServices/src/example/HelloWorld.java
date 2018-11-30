@@ -5,6 +5,10 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.ws.Endpoint;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -16,9 +20,22 @@ public class HelloWorld {
     Books tempres = new Books(title, "intitle");
     ArrayList<Book> temp = tempres.getBooklist();
     Book[] result = new Book[temp.size()];
-    for (int i = 0; i<temp.size(); i++){
-      result[i] = temp.get(i);
-      System.out.println(result[i].getCategories());
+    try {
+      Class.forName("com.mysql.jdbc.Driver");
+      Connection myConn = DriverManager.getConnection("JDBC:mysql://localhost:3307/book_service", "root", "");
+      Statement myStmt = myConn.createStatement();
+      for (int i = 0; i<temp.size(); i++){
+        result[i] = temp.get(i);
+        String query = "SELECT price FROM prices WHERE book_id = '" + result[i].getId() + "';";
+        ResultSet myRs = myStmt.executeQuery(query);
+        while (myRs.next()) {
+          int price = myRs.getInt("price");
+          result[i].setHarga(price);
+        }
+        System.out.println(result[i]);
+      }
+    } catch (Exception e){
+      e.printStackTrace();
     }
     return result;
   }
@@ -28,6 +45,20 @@ public class HelloWorld {
     Books tempres = new Books(id);
     ArrayList<Book> temp = tempres.getBooklist();
     Book result = temp.get(0);
+    try {
+      Class.forName("com.mysql.jdbc.Driver");
+      Connection myConn = DriverManager.getConnection("JDBC:mysql://localhost:3307/book_service", "root", "");
+      Statement myStmt = myConn.createStatement();
+
+      String query = "SELECT price FROM prices WHERE book_id = '" + result.getId() + "';";
+      ResultSet myRs = myStmt.executeQuery(query);
+      while (myRs.next()) {
+        int price = myRs.getInt("price");
+        result.setHarga(price);
+      }
+    } catch (Exception e){
+      e.printStackTrace();
+    }
     System.out.println(result.getCategories());
     return result;
   }
