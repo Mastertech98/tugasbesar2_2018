@@ -65,6 +65,27 @@ public class HelloWorld {
 
   @WebMethod
   public Book getRecommendation(String[] categories){
+    try {
+      Class.forName("com.mysql.jdbc.Driver");
+      Connection myConn = DriverManager.getConnection("JDBC:mysql://localhost:3307/book_service", "root", "");
+      Statement myStmt = myConn.createStatement();
+
+      for(String cat : categories){
+        String query = "SELECT book_id FROM total_bought WHERE category LIKE '%" + cat + "%' ORDER BY n_bought DESC;";
+        ResultSet myRs = myStmt.executeQuery(query);
+        if (myRs.next()) {
+          String bookid = myRs.getString("book_id");
+          System.out.println(bookid);
+          Books tempres = new Books(bookid);
+          ArrayList<Book> temp = tempres.getBooklist();
+          Book result = temp.get(0);
+          return result;
+        }
+      }
+    } catch (Exception e){
+      e.printStackTrace();
+    }
+
     int rnd = new Random().nextInt(categories.length);
     String sub = categories[rnd];
     if (sub.equalsIgnoreCase("none")){
