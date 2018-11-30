@@ -1,12 +1,18 @@
 <?php // Logout function
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/config.php";
     $access_token = $_COOKIE['access_token'];
-    $currentid = $mysqli->query("SELECT id FROM user WHERE access_token = '$access_token'");
+
+    if (!$currentid = $mysqli->query("SELECT * FROM access_info WHERE token = $access_token")) {
+        echo "Failed to run query: (" . $mysqli->errno . ") " . $mysqli->error;
+        exit;
+    }
+    
     $currentid = $currentid->fetch_assoc();
-    $currentid = $currentid['id'];
+    $currentid = $currentid['user_id'];
+
     $query = $mysqli->query("SELECT username FROM user WHERE id = '$currentid'");
     $result = $query->fetch_assoc();
 ?>
+
 <header class="top-menu">
     <div class="container-top-bar">
         <span class="pro logo">Pro</span>

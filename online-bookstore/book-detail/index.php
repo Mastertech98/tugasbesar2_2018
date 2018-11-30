@@ -1,13 +1,20 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/at-config.php';
+
 if (!isset($_COOKIE['access_token'])) {
+    header("Location: /login/");
+    exit;
+}
+
+$access_token = $_COOKIE['access_token'];
+if (getAccessToken($access_token, $mysqli)->num_rows == 0) {
     header("Location: /login/");
     exit;
 }
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-        require_once $_SERVER['DOCUMENT_ROOT'] . "/config.php";
-
         if (!isset($_GET['id'])) {
             http_response_code(400);
             exit;
@@ -57,12 +64,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
         break;
     case 'POST':
-        require_once $_SERVER['DOCUMENT_ROOT'] . "/config.php";
+        // require_once $_SERVER['DOCUMENT_ROOT'] . "/config.php";
 
-        $access_token = $_COOKIE['access_token'];
-        $id = $mysqli->query("SELECT id FROM user WHERE access_token = '$access_token'");
+        // $access_token = $_COOKIE['access_token'];
+        $id = $mysqli->query("SELECT * FROM access_info WHERE access_token = '$access_token'");
         $id = $id->fetch_assoc();
-        $id = $id['id'];
+        $id = $id['user_id'];
 
         $buyer_id = $mysqli->real_escape_string($id);
         $book_id = $mysqli->real_escape_string($_POST['id']);

@@ -1,20 +1,27 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/at-config.php';
+
 if (!isset($_COOKIE['access_token'])) {
     header("Location: /login/");
     exit;
 }
+
+$access_token = $_COOKIE['access_token'];
+if (getAccessToken($access_token, $mysqli)->num_rows == 0) {
+    header("Location: /login/");
+    exit;
+}
+
 
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     http_response_code(405);
     exit;
 }
 
-require_once $_SERVER['DOCUMENT_ROOT'] . "/config.php";
-
-$access_token = $_COOKIE['access_token'];
-$user_id = $mysqli->query("SELECT id FROM user WHERE access_token = '$access_token'");
+$user_id = $mysqli->query("SELECT * FROM access_info WHERE token = '$access_token'");
 $user_id = $user_id->fetch_assoc();
-$user_id = $user_id['id'];
+$user_id = $user_id['user_id'];
 
 $history_query = "SELECT user_order.id, book_id, title, order_date, quantity, rating IS NOT NULL AS reviewed FROM (SELECT id, book_id, quantity, order_date, rating FROM `order` WHERE buyer_id = '$user_id') AS `user_order` JOIN `book` ON book_id = book.id ORDER BY order_date DESC";
 
