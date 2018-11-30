@@ -1,10 +1,10 @@
-package book.server;
+package server;
 
 import book.Books;
 
 import javax.jws.WebService;
 
-@WebService(endpointInterface = "book.server.BookSoap")
+@WebService(endpointInterface = "server.BookSoap")
 public class BookSoapImpl implements BookSoap{
 
   /*

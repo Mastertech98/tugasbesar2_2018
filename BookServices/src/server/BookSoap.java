@@ -1,4 +1,4 @@
-package book.server;
+package server;
 
 import book.Books;
 
