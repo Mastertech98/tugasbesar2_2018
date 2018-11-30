@@ -15,10 +15,18 @@ li {
 }
 
 .found-result {
-    align-self: flex-end;
     color: #4e4e4e;
     font-size: 20px;
+    align-self: flex-end;
     margin: 4px 0;
+}
+
+.found-result input{
+    color: #4e4e4e;
+    text-decoration: underline;
+    font-size: 20px;
+    border-width: 0;
+    width: 22px;
 }
 
 #result-count {

@@ -68,6 +68,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
         // $access_token = $_COOKIE['access_token'];
         $id = $mysqli->query("SELECT * FROM access_info WHERE access_token = '$access_token'");
+        var_dump($id);
         $id = $id->fetch_assoc();
         $id = $id['user_id'];
 

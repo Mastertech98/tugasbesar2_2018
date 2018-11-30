@@ -4,6 +4,10 @@ import book.*;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 import javax.xml.ws.Endpoint;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -109,6 +113,22 @@ public class HelloWorld {
         return new Book();
       }
     }
+  }
+
+  @WebMethod
+  public boolean orderBook(int bookID, int bookCount, long accountNumber){
+    try {
+      Class.forName("com.mysql.jdbc.Driver");
+      Connection myConn = DriverManager.getConnection("JDBC:mysql://localhost:3307/book_service", "root", "");
+      Statement myStmt = myConn.createStatement();
+      Client client= ClientBuilder.newClient();
+      WebTarget target = client.target("http://localhost/transaction?sender="+ accountNumber + "&receiver=098778907654&amount=bookCount");
+      System.out.println(target.request(MediaType.TEXT_XML).get(String.class));
+
+    } catch (Exception e){
+      e.printStackTrace();
+    }
+    return true;
   }
 
   public static void main(String[] argv) {
