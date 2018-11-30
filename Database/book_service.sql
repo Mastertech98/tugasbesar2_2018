@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Nov 30, 2018 at 11:06 AM
+-- Generation Time: Nov 30, 2018 at 02:09 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -69,12 +69,6 @@ INSERT INTO `total_bought` (`book_id`, `category`, `n_bought`) VALUES
 --
 ALTER TABLE `prices`
   ADD PRIMARY KEY (`book_id`);
-
---
--- Indexes for table `total_bought`
---
-ALTER TABLE `total_bought`
-  ADD PRIMARY KEY (`book_id`,`category`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

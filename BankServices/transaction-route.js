@@ -16,21 +16,6 @@ router.post('/', (req, res, next) => {
 
     db.connect(function(err) {
         db.query('SELECT Saldo FROM nasabah WHERE No_Kartu = ?', [sender_card_number], function (err, result) {
-<<<<<<< HEAD
-            console.log('after select');
-            if (err) throw err;
-            if (result[0]['Saldo'] >= amount) {
-                console.log('after saldo');
-                db.query('UPDATE nasabah SET Saldo = Saldo - ? WHERE No_Kartu = ?', [amount, sender_card_number], function(err, result) {
-                    if (err) throw err;
-                });
-                console.log('after update send');
-                
-                db.query('UPDATE nasabah SET Saldo = Saldo + ? WHERE No_Kartu = ?', [amount, receiver_card_number], function(err, result) {
-                    if (err) throw err;
-                });
-                console.log('after update receiver');
-=======
             if (err) {
                 res.json({
                     success: false,
@@ -40,7 +25,6 @@ router.post('/', (req, res, next) => {
             };
             
             if (result[0]['Saldo'] >= amount) {
->>>>>>> 8b9dc3f235ca6f597854359584b59513f87d4a67
                 
                 db.beginTransaction(function(err) {
                     if (err) throw err;

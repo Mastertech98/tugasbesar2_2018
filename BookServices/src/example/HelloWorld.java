@@ -1,6 +1,9 @@
 package example;
 
 import book.*;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -12,6 +15,10 @@ import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.xml.ws.Endpoint;
 import javax.xml.ws.Response;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -78,7 +85,7 @@ public class HelloWorld {
       Statement myStmt = myConn.createStatement();
 
       for(String cat : categories){
-        String query = "SELECT book_id FROM total_bought WHERE category LIKE '%" + cat + "%' ORDER BY n_bought DESC;";
+        String query = "SELECT book_id FROM total_bought WHERE category LIKE '%" + cat + "%' ORDER BY SUM(n_bought) DESC;";
         ResultSet myRs = myStmt.executeQuery(query);
         if (myRs.next()) {
           String bookid = myRs.getString("book_id");
@@ -119,18 +126,49 @@ public class HelloWorld {
   }
 
   @WebMethod
-  public boolean orderBook(int bookID, int bookCount, long accountNumber){
+  public boolean orderBook(String bookID, int bookCount, long accountNumber){
     try {
+      Book temp = new Books(bookID).getBooklist().get(0);
+      ArrayList<String> categories = (ArrayList<String>) temp.getCategories();
+      String category = categories.get(0);
       Class.forName("com.mysql.jdbc.Driver");
       Connection myConn = DriverManager.getConnection("JDBC:mysql://localhost:3307/book_service", "root", "");
       Statement myStmt = myConn.createStatement();
-      Client client= ClientBuilder.newClient();
-      //WebTarget target = client.target("http://localhost:7000/transaction?sender="+ accountNumber + "&receiver=098778907654&amount=" + bookCount);
-      WebTarget webTarget = client.target("http://localhost:7000/transaction?sender="+ accountNumber + "&receiver=098778907654&amount=" + bookCount);
-      Form form = new Form();
-      javax.ws.rs.core.Response response = webTarget.request().post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED));
-      System.out.println(response);
+      String query = "SELECT price FROM prices WHERE book_id = '" + bookID + "';";
+      ResultSet myRs = myStmt.executeQuery(query);
+      int price = 0;
+      if (myRs.next()) {
+        price = myRs.getInt("price");
+      }
+      int total = price * bookCount;
+      String insert = "INSERT INTO total_bought(book_id, category, n_bought) VALUES (" + bookID + "," + category + "," + bookCount + ");";
+      Statement ins_statement = myConn.createStatement();
+      int ins_res = ins_statement.executeUpdate(insert);
 
+      HttpURLConnection connection = null;
+      try {
+        URL address = new URL("http://localhost:7000/transaction?sender="+ accountNumber + "&receiver=098778907654&amount=" + total);
+        connection = (HttpURLConnection) address.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setReadTimeout(5000);
+        connection.setConnectTimeout(5000);
+
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(connection.getInputStream()));
+        int input;
+        StringBuilder response = new StringBuilder();
+
+        while ((input = in.read()) != -1) {
+          response.append((char) input);
+        }
+        in.close();
+        JsonParser jsonParser = new JsonParser();
+        JsonObject jo = (JsonObject)jsonParser.parse(response.toString());
+        return jo.get("success").getAsBoolean();
+      }
+      catch (Exception e) {
+        e.printStackTrace();
+      }
     } catch (Exception e){
       e.printStackTrace();
     }
