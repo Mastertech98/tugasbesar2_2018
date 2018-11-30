@@ -16,19 +16,24 @@ router.post('/', (req, res, next) => {
 
     db.connect(function(err) {
         db.query('SELECT Saldo FROM nasabah WHERE No_Kartu = ?', [sender_card_number], function (err, result) {
+            console.log('after select');
             if (err) throw err;
             if (result[0]['Saldo'] >= amount) {
+                console.log('after saldo');
                 db.query('UPDATE nasabah SET Saldo = Saldo - ? WHERE No_Kartu = ?', [amount, sender_card_number], function(err, result) {
                     if (err) throw err;
                 });
+                console.log('after update send');
                 
                 db.query('UPDATE nasabah SET Saldo = Saldo + ? WHERE No_Kartu = ?', [amount, receiver_card_number], function(err, result) {
                     if (err) throw err;
                 });
+                console.log('after update receiver');
                 
                 db.query('INSERT INTO transaksi (No_Kartu_Pengirim, No_Kartu_Penerima, Jumlah, Waktu_Transaksi) VALUES(?, ?, ?, NOW())', [sender_card_number, receiver_card_number, amount], function(err, result) {
                     if (err) throw err;
                 });
+                console.log('after insert');
                 
                 res.json({
                     success: true,
