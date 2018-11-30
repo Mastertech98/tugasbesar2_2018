@@ -45,6 +45,11 @@ response.addCookie( cookie );`
 - Servlet menyediakan HttpSession mechanism menggunakan cookie `JSESSIONID`
 
 ## Mekanisme Pembangkitan Token dan Expiry Time
+- Membuat token dengan random 
+- Mengambil IP address user
+- Mengambil informasi browser user
+- Masukkan nilai token ke dalam database akses_info
+- Membuat cookie dengan expire time yang dusah ditentukan
 
 ## Kelebihan dan Kekurangan
 ### Kelebihan
