@@ -23,7 +23,7 @@ $user_id = $mysqli->query("SELECT * FROM access_info WHERE token = '$access_toke
 $user_id = $user_id->fetch_assoc();
 $user_id = $user_id['user_id'];
 
-$url = "http://localhost:9000/HelloWorld?wsdl";
+$url = "http://localhost:9000/BookWS?wsdl";
 $client = new SoapClient($url);        
 
 $history_query = "SELECT id, book_id, order_date, quantity, rating IS NOT NULL AS reviewed FROM `order` WHERE buyer_id = '$user_id' ORDER BY order_date DESC";

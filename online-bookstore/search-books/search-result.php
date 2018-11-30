@@ -3,7 +3,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/config.php";
 $data = json_decode(file_get_contents("php://input"));
 $title = $data->title;
 
-$url = "http://localhost:9000/HelloWorld?wsdl";
+$url = "http://localhost:9000/BookWS?wsdl";
 $client = new SoapClient($url);
 $result = (array)$client->searchBooksByTitle($title);
 $n_items = 0;

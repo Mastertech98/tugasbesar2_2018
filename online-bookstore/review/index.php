@@ -31,7 +31,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         
         $book = $books->fetch_assoc();
         
-        $url = "http://localhost:9000/HelloWorld?wsdl";
+        $url = "http://localhost:9000/BookWS?wsdl";
         $client = new SoapClient($url);
         $result = (array)$client->searchBookByID($book['book_id']);
         $book['book_title'] = $result['title'];

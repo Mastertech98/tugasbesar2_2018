@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="06a1e6eb-edeb-40b8-8c05-5eba94342f26" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/example/HelloWorld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/example/BookWS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/sun-jaxws.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/sun-jaxws.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,11 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="HelloWorld.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/example/HelloWorld.java">
+      <file leaf-file-name="BookWS.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/example/BookWS.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22">
-              <caret line="30" column="23" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="23" />
+            <state relative-caret-position="483">
+              <caret line="164" column="26" lean-forward="true" selection-start-line="164" selection-start-column="26" selection-end-line="164" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -36,8 +38,8 @@
       <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="16896">
-              <caret line="768" column="12" selection-start-line="768" selection-start-column="12" selection-end-line="768" selection-end-column="12" />
+            <state relative-caret-position="15664">
+              <caret line="712" column="12" selection-start-line="712" selection-start-column="12" selection-end-line="712" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -96,6 +98,7 @@
         <option value="$PROJECT_DIR$/src/book/server/Publisher.java" />
         <option value="$PROJECT_DIR$/src/example/OrderBook.java" />
         <option value="$PROJECT_DIR$/src/example/HelloWorld.java" />
+        <option value="$PROJECT_DIR$/src/example/BookWS.java" />
       </list>
     </option>
   </component>
@@ -274,12 +277,12 @@
       <workItem from="1543285094354" duration="2037000" />
       <workItem from="1543565981679" duration="4539000" />
       <workItem from="1543574327669" duration="1309000" />
-      <workItem from="1543590167312" duration="441000" />
+      <workItem from="1543590167312" duration="682000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34830000" />
+    <option name="totallyTimeSpent" value="35071000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -312,13 +315,13 @@
       <window_info anchor="right" id="Bean Validation" order="4" />
       <window_info id="Web" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Analysis" order="7" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32943678" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info active="true" anchor="bottom" id="Messages" order="7" visible="true" weight="0.3290938" />
-      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info id="simpleUML" order="3" />
@@ -368,7 +371,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/example/HelloWorld.java">
+    <entry file="file://$PROJECT_DIR$/src/example/BookWS.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
           <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
@@ -403,7 +406,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/example/HelloWorld.java">
+    <entry file="file://$PROJECT_DIR$/src/example/BookWS.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
@@ -431,7 +434,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/example/HelloWorld.java">
+    <entry file="file://$PROJECT_DIR$/src/example/BookWS.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
@@ -448,7 +451,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/example/HelloWorld.java">
+    <entry file="file://$PROJECT_DIR$/src/example/BookWS.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
@@ -514,12 +517,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16896">
-          <caret line="768" column="12" selection-start-line="768" selection-start-column="12" selection-end-line="768" selection-end-column="12" />
+        <state relative-caret-position="15664">
+          <caret line="712" column="12" selection-start-line="712" selection-start-column="12" selection-end-line="712" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/example/HelloWorld.java">
+    <entry file="file://$PROJECT_DIR$/src/example/BookWS.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
           <caret line="137" column="27" selection-start-line="137" selection-start-column="27" selection-end-line="137" selection-end-column="27" />
@@ -536,7 +539,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/example/HelloWorld.java">
+    <entry file="file://$PROJECT_DIR$/src/example/BookWS.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2530" />
       </provider>
@@ -587,7 +590,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/example/HelloWorld.java">
+    <entry file="file://$PROJECT_DIR$/src/example/BookWS.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
           <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
@@ -622,7 +625,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/example/HelloWorld.java">
+    <entry file="file://$PROJECT_DIR$/src/example/BookWS.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
@@ -650,7 +653,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/example/HelloWorld.java">
+    <entry file="file://$PROJECT_DIR$/src/example/BookWS.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
@@ -667,7 +670,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/example/HelloWorld.java">
+    <entry file="file://$PROJECT_DIR$/src/example/BookWS.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
@@ -731,10 +734,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/example/HelloWorld.java">
+    <entry file="file://$PROJECT_DIR$/src/example/BookWS.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="30" column="23" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="23" />
+        <state relative-caret-position="483">
+          <caret line="164" column="26" lean-forward="true" selection-start-line="164" selection-start-column="26" selection-end-line="164" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

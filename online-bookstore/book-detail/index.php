@@ -21,7 +21,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
         $book_id = $mysqli->real_escape_string($_GET['id']);
 
-        $url = "http://localhost:9000/HelloWorld?wsdl";
+        $url = "http://localhost:9000/BookWS?wsdl";
         $client = new SoapClient($url);
         $result = (array)$client->searchBookByID($book_id);
         
@@ -80,7 +80,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $book_id = $mysqli->real_escape_string($_POST['id']);
         $quantity = $mysqli->real_escape_string($_POST['quantity']);
 
-        $url = "http://localhost:9000/HelloWorld?wsdl";
+        $url = "http://localhost:9000/BookWS?wsdl";
         $client = new SoapClient($url);
         $result = $client->orderBook($book_id, $quantity, $card);
         var_dump($result);
