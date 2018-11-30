@@ -16,7 +16,10 @@ $user_id = $mysqli->query("SELECT id FROM user WHERE access_token = '$access_tok
 $user_id = $user_id->fetch_assoc();
 $user_id = $user_id['id'];
 
-$history_query = "SELECT id, book_id, order_date, quantity, rating IS NOT NULL AS reviewed, book_title, cover FROM   `order` WHERE buyer_id = '$user_id' ORDER BY order_date DESC";
+$url = "http://localhost:9000/HelloWorld?wsdl";
+$client = new SoapClient($url);        
+
+$history_query = "SELECT id, book_id, order_date, quantity, rating IS NOT NULL AS reviewed FROM `order` WHERE buyer_id = '$user_id' ORDER BY order_date DESC";
 
 if (!$history = $mysqli->query($history_query)) {
     echo "Failed to run query: (" . $mysqli->errno . ") " . $mysqli->error;
@@ -41,8 +44,9 @@ if (!$history = $mysqli->query($history_query)) {
             <?php while ($order = $history->fetch_assoc()) { ?>
             <li>
                 <?php 
-                    $book_cover = glob($_SERVER['DOCUMENT_ROOT'] . "/book-detail/cover/". $order['book_id'] .".*");
-                    $book_cover = $book_cover ? basename($book_cover[0]) : "0.jpg";                 
+                    $result = (array)$client->searchBookByID($order['book_id']); 
+                    $order['cover'] = $result['cover'];
+                    $order['book_title'] = $result['title'];                
                 ?>
                 <div class="book-cover"><img src="<?= $order['cover'] ?>" alt="cover of <?= $order['book_title'] ?>" /></div>
                 <div class= "middle">
