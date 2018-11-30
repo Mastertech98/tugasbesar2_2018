@@ -21,8 +21,35 @@
 - total_bought(book_id, category, n_bought)
 
 ## Konsep Shared Session
+- Shared session di java menggunakan : `javax.servlet.HttpSession`
+- Pada level aplikasi, menggunakan : 
+`ServletContext ctx = getServletContext();
+Data data = new Data();
+ctx.setAttribute("data", data);`
+- Pada level session, menggunakan : 
+`protected doPost(HttpServletRequest request,
+HttpServletResponse) {
+HttpSession session = request.getSession();
+Data data = new Data();
+session.setAttribute("data", data);`
+- Pada level request, menggunakan :
+`protected doPost(HttpServletRequest request,
+HttpServletResponse response) {
+Data data = new Data();
+request.setAttribute("data", data);
+response.addCookie( cookie );`
+- Session handling :
+    - cookies
+    - URL rewriting
+    - hidden form fields
+- Servlet menyediakan HttpSession mechanism menggunakan cookie `JSESSIONID`
 
 ## Mekanisme Pembangkitan Token dan Expiry Time
+- Membuat token dengan random 
+- Mengambil IP address user
+- Mengambil informasi browser user
+- Masukkan nilai token ke dalam database akses_info
+- Membuat cookie dengan expire time yang dusah ditentukan (expire time hanya dibangkitkan sekali setelah dibuat)
 
 ## Kelebihan dan Kekurangan
 ### Kelebihan
@@ -50,18 +77,20 @@
 
 ## Pembagian Tugas
 REST :
-1. Validasi nomor kartu : 1351xxxx
-2. ...
+1. Koneksi nodejs ke mysql : 13516026
+2. Membuat service validasi kartu : 13516134
+3. Membuat service transfer : 13516050
 
 SOAP :
-1. Add Produce : 1351xxxx
-2. Fungsionalitas Y : 1351xxxx
-3. ...
+1. Pembelian : 13516026
+2. Rekomendasi : 13516134
+3. Pencarian buku dan pengambilan detail : 13516050
 
 Perubahan Web app :
-1. Halaman Search : 
-2. Halaman X :
-3. ...
+1. Halaman Search : Search page dan search result digabungkan 
+2. Halaman History dan Review : pengambilan dari web service
+3. Halaman Profile dan Efit profile : penambahan nomor kartu
+4. Halaman detail buku : penambahan rekomendasi
 
 ## About
 
