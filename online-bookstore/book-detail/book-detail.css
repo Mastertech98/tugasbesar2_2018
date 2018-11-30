@@ -81,7 +81,7 @@ form .button button {
     background-color: #00aeef;
     color: white;
     font-size: 16px;
-    height: 28px;
+    min-height: 28px;
     border: 0;
     border-radius: 4px;
 }

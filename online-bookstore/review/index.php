@@ -22,14 +22,33 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
         $order_id = $mysqli->real_escape_string($_GET['id']);
 
-        $book_query = "SELECT id, title, author FROM (SELECT book_id FROM `order` WHERE id = '$order_id') AS `book_order` JOIN `book` ON book_id = id";
+        $book_query = "SELECT book_id FROM `order` WHERE id = '$order_id'";
         
         if (!$books = $mysqli->query($book_query)) {
             echo "Failed to run query: (" . $mysqli->errno . ") " . $mysqli->error;
             exit;
         }
-
+        
         $book = $books->fetch_assoc();
+        
+        $url = "http://localhost:9000/HelloWorld?wsdl";
+        $client = new SoapClient($url);
+        $result = (array)$client->searchBookByID($book['book_id']);
+        $book['book_title'] = $result['title'];
+        $book['author'] = "";
+        if (!is_array($result['authors'])){
+            $book['author'] = $result['authors'];
+        }
+        else{
+            $last = count($result['authors']) - 1;
+            for($i = 0; $i <= $last ; $i++){
+                if ($i == 0){
+                    $book['author'] = $result['authors'][$i];
+                }
+                $book['author'] = $book['author'] . ', ' . $result['authors'][$i];
+            }
+        }
+        $book['cover'] = $result['cover'];
 
         break;
     case 'POST':
@@ -65,8 +84,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/header.php' ?>
     <main>
         <section>
-            <div class="book-cover"><img src="/book-detail/cover/<?= $book['id'] ?>.jpg" alt="cover of <?= $book['title'] ?>" /></div>
-            <h1 class="book-title"><?= $book['title'] ?></h1>
+            <div class="book-cover"><img src="<?= $book['cover'] ?>" alt="cover of <?= $book['book_title'] ?>" /></div>
+            <h1 class="book-title"><?= $book['book_title'] ?></h1>
             <div class="book-author"><?= $book['author'] ?></div>
         </section>
         <form method="post">

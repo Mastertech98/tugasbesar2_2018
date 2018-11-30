@@ -125,7 +125,6 @@ public class Books {
 
         Book tempbook = new Book(id, booktitle, authors, categories, cover, desc, harga);
         booklist.add(tempbook);
-        System.out.println(tempbook);
       }
 
     } catch (Exception e) {

@@ -143,7 +143,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                             echo "<button disabled>". $book['price']. "</button>";
                         }
                         else{
-                            echo "<button>". $book['price']. "</button>";
+                            echo "<button> Rp ". $book['price']. "<br/> Click to Order</button>";
                         }
                     ?>
                 </div>
