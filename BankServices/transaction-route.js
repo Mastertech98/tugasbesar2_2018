@@ -16,6 +16,7 @@ router.post('/', (req, res, next) => {
 
     db.connect(function(err) {
         db.query('SELECT Saldo FROM nasabah WHERE No_Kartu = ?', [sender_card_number], function (err, result) {
+<<<<<<< HEAD
             console.log('after select');
             if (err) throw err;
             if (result[0]['Saldo'] >= amount) {
@@ -29,9 +30,70 @@ router.post('/', (req, res, next) => {
                     if (err) throw err;
                 });
                 console.log('after update receiver');
+=======
+            if (err) {
+                res.json({
+                    success: false,
+                    message: "Card number is invalid"
+                });
+                throw err
+            };
+            
+            if (result[0]['Saldo'] >= amount) {
+>>>>>>> 8b9dc3f235ca6f597854359584b59513f87d4a67
                 
-                db.query('INSERT INTO transaksi (No_Kartu_Pengirim, No_Kartu_Penerima, Jumlah, Waktu_Transaksi) VALUES(?, ?, ?, NOW())', [sender_card_number, receiver_card_number, amount], function(err, result) {
+                db.beginTransaction(function(err) {
                     if (err) throw err;
+                    
+                    db.query('UPDATE nasabah SET Saldo = Saldo - ? WHERE No_Kartu = ?', [amount, sender_card_number], function(err, result) {
+                        if (err) {
+                            res.json({
+                                success: false,
+                                message: "Error when updating sender's balance"
+                            });
+                            return db.rollback(function() {
+                                throw err;
+                            });
+                        }
+                    });
+                    
+                    db.query('UPDATE nasabah SET Saldo = Saldo + ? WHERE No_Kartu = ?', [amount, receiver_card_number], function(err, result) {
+                        if (err) {
+                            res.json({
+                                success: false,
+                                message: "Error when updating receiver's balance"
+                            });
+                            return db.rollback(function() {
+                                throw err;
+                            });
+                        }
+                        
+                    });
+                    
+                    db.query('INSERT INTO transaksi (No_Kartu_Pengirim, No_Kartu_Penerima, Jumlah, Waktu_Transaksi) VALUES(?, ?, ?, NOW())', [sender_card_number, receiver_card_number, amount], function(err, result) {
+                        if (err) {
+                            res.json({
+                                success: false,
+                                message: "Error when inserting transaction"
+                            });
+                            return db.rollback(function() {
+                                throw err;
+                            });
+                        }
+                    });
+
+                    db.commit(function(err) {
+                        if (err) {
+                            res.json({
+                                success: false,
+                                message: "Error commiting changes"
+                            });
+                            return db.rollback(function() {
+                                throw err;
+                            });
+                        }
+                    });
+
                 });
                 console.log('after insert');
                 
@@ -42,7 +104,7 @@ router.post('/', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    message: 'Balance not enough'
+                    message: 'Balance is not enough'
                 });
             }
         });
