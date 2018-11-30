@@ -15,7 +15,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
         $order_id = $mysqli->real_escape_string($_GET['id']);
 
-        $book_query = "SELECT id, title, author FROM (SELECT book_id FROM `order` WHERE id = '$order_id') AS `book_order` JOIN `book` ON book_id = id";
+        $book_query = "SELECT id, book_title, author, cover FROM `order` WHERE id = '$order_id'";
         
         if (!$books = $mysqli->query($book_query)) {
             echo "Failed to run query: (" . $mysqli->errno . ") " . $mysqli->error;
@@ -60,8 +60,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/header.php' ?>
     <main>
         <section>
-            <div class="book-cover"><img src="/book-detail/cover/<?= $book['id'] ?>.jpg" alt="cover of <?= $book['title'] ?>" /></div>
-            <h1 class="book-title"><?= $book['title'] ?></h1>
+            <div class="book-cover"><img src="<?= $book['cover'] ?>" alt="cover of <?= $book['book_title'] ?>" /></div>
+            <h1 class="book-title"><?= $book['book_title'] ?></h1>
             <div class="book-author"><?= $book['author'] ?></div>
         </section>
         <form method="post">

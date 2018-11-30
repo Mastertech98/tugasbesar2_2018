@@ -16,7 +16,7 @@ $user_id = $mysqli->query("SELECT id FROM user WHERE access_token = '$access_tok
 $user_id = $user_id->fetch_assoc();
 $user_id = $user_id['id'];
 
-$history_query = "SELECT user_order.id, book_id, title, order_date, quantity, rating IS NOT NULL AS reviewed FROM (SELECT id, book_id, quantity, order_date, rating FROM `order` WHERE buyer_id = '$user_id') AS `user_order` JOIN `book` ON book_id = book.id ORDER BY order_date DESC";
+$history_query = "SELECT id, book_id, order_date, quantity, rating IS NOT NULL AS reviewed, book_title, cover FROM   `order` WHERE buyer_id = '$user_id' ORDER BY order_date DESC";
 
 if (!$history = $mysqli->query($history_query)) {
     echo "Failed to run query: (" . $mysqli->errno . ") " . $mysqli->error;
@@ -44,9 +44,9 @@ if (!$history = $mysqli->query($history_query)) {
                     $book_cover = glob($_SERVER['DOCUMENT_ROOT'] . "/book-detail/cover/". $order['book_id'] .".*");
                     $book_cover = $book_cover ? basename($book_cover[0]) : "0.jpg";                 
                 ?>
-                <div class="book-cover"><img src="/book-detail/cover/<?= $book_cover ?>" alt="cover of <?= $order['title'] ?>" /></div>
+                <div class="book-cover"><img src="<?= $order['cover'] ?>" alt="cover of <?= $order['book_title'] ?>" /></div>
                 <div class= "middle">
-                    <div class="book-title"><?= $order['title'] ?></div>
+                    <div class="book-title"><?= $order['book_title'] ?></div>
                     <div class="order-quantity">Quantity: <?= $order['quantity'] ?></div>
                     <div class="order-reviewed"><?= $order['reviewed'] ? 'Reviewed' : 'Not reviewed' ?></div>
                 </div>
