@@ -7,14 +7,7 @@ import com.google.gson.JsonParser;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Form;
-import javax.ws.rs.core.MediaType;
 import javax.xml.ws.Endpoint;
-import javax.xml.ws.Response;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -28,7 +21,7 @@ import java.util.Random;
 
 @WebService()
 @SOAPBinding(style = SOAPBinding.Style.RPC)
-public class HelloWorld {
+public class BookWS {
   @WebMethod
   public Book[] searchBooksByTitle(String title){
     Books tempres = new Books(title, "intitle");
@@ -176,8 +169,8 @@ public class HelloWorld {
   }
 
   public static void main(String[] argv) {
-    Object implementor = new HelloWorld ();
-    String address = "http://localhost:9000/HelloWorld";
+    Object implementor = new BookWS();
+    String address = "http://localhost:9000/BookWS";
     Endpoint.publish(address, implementor);
   }
 }
